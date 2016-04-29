@@ -51,7 +51,10 @@
 
     // Xpath will not grab the title so replace that too
     // Do it first because it is always visible
-    document.title = document.title.replace(wordsFilter, replaceString);
+    if (document.title.search(wordsFilter) !== -1)
+    {
+      document.title = document.title.replace(wordsFilter, replaceString);
+    }
 
 
     // Now replace those text nodes with the replacement string
