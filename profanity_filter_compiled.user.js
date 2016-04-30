@@ -18,8 +18,8 @@
 
 (function(){
 //let st = performance.now();
-let a=new RegExp("\\b(fuck|shit|ass|asshole|damn|bullshit|shitty|bitch|shittings|shitters|shitter|shitted|shitfull|shiz|sh!t|piss|pissoff|pissin|nigger|nigga|motherfuckin|motherfuck|mothafuckin|mothafuckaz|mothafuckas|mothafucka|mothafuck|jackass|goddamn|fuk|fuckme|fuckin|fcuk|crap|phuq|phukking|phuk|phuck|feg|fatass|fags|faggot|fagot|faggit|fagging|fagget|fag|dumbass|douche|dipshit|bastard|cunt|assholes|buttfuck|bitchin|asswipe|asskisser)(ing|ed|er)?(es|s)?\\b", "gi"),b=document.evaluate(".//*[not(self::script or self::noscript or self::textarea)]/text()[string-length(normalize-space(.)) > 2]",
-document.body,null,XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,null);document.title=document.title.replace(a,"*bleep*");for(let c=1,d;d=b.snapshotItem(++c);)-1!==d.data.search(a)&&(d.data=d.data.replace(a,"*bleep*"));
+let a=new RegExp("\\b(fuck|shit|ass|damn|asshole|bullshit|shitty|bitch|piss|sh!t|jackass|goddamn|crap|bastard|assholes|cunt|dumbass|fag|douche|shittings|shitters|shitter|shitted|shitfull|shiz|pissoff|pissin|nigger|nigga|motherfuckin|motherfuck|mothafuckin|mothafuckaz|mothafucka|mothafuck|fuk|fuckme|fuckin|fcuk|phuq|phukking|phuk|phuck|feg|fatass|fags|faggot|fagot|faggit|fagging|fagget|dipshit|buttfuck|bitchin|asswipe|asskisser)(ing|ed|er)?(es|s)?\\b", "gi"),b=document.evaluate(".//*[not(self::script or self::noscript or self::textarea)]/text()[string-length(normalize-space(.)) > 2]",
+document.body,null,XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,null);-1!==document.title.search(a)&&(document.title=document.title.replace(a,"*bleep*"));for(let c=0,d;d=b.snapshotItem(c++);)-1!==d.data.search(a)&&(d.data=d.data.replace(a,"*bleep*"));
 //let et = performance.now();
 //console.log("Milliseconds to complete: " + (et - st).toString());
 })();
