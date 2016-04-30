@@ -26,7 +26,7 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still largely TODO, but not important)
-    const words = ['fuck','shit','ass','asshole','damn','bullshit','shitty','bitch','shittings','shitters','shitter','shitted','shitfull','shiz','sh!t','piss','pissoff','pissin','nigger','nigga','motherfuckin','motherfuck','mothafuckin','mothafuckaz','mothafuckas','mothafucka','mothafuck','jackass','goddamn','fuk','fuckme','fuckin','fcuk','crap','phuq','phukking','phuk','phuck','feg','fatass','fags','faggot','fagot','faggit','fagging','fagget','fag','dumbass','douche','dipshit','bastard','cunt','assholes','buttfuck','bitchin','asswipe','asskisser'];
+    const words = ['fuck','shit','ass','asshole','damn','bullshit','shitty','bitch','shittings','shitters','shitter','shitted','shitfull','shiz','sh!t','piss','pissoff','pissin','nigger','nigga','motherfuckin','motherfuck','mothafuckin','mothafuckaz','mothafucka','mothafuck','jackass','goddamn','fuk','fuckme','fuckin','fcuk','crap','phuq','phukking','phuk','phuck','feg','fatass','fags','faggot','fagot','faggit','fagging','fagget','fag','dumbass','douche','dipshit','bastard','cunt','assholes','buttfuck','bitchin','asswipe','asskisser'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
