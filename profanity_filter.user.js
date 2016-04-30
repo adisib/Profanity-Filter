@@ -40,7 +40,7 @@
 
     // Grab nodes with Xpath (it should perform better because implemented natively)
     // Grabs text not in script tags that isn't just whitespace (which happens pretty often)
-    let textNodes = document.evaluate(".//*[not(self::script or self::noscript or self::textarea)]/text()[string-length(normalize-space(.)) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+    let textNodes = document.evaluate(".//*[not(self::script or self::noscript or self::code or self::textarea)]/text()[string-length(normalize-space(.)) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
 
     if (DEBUG)
@@ -66,7 +66,7 @@
     {
         //if (DEBUG)
         //{
-        //  console.log("PF | " + textNode.data);
+        //  console.log("PF | " + textNode.parentNode.tagName + " , '" + textNode.data + "'");
         //}
 
         // Only do a more expensive replace if a match is found
