@@ -58,7 +58,7 @@
 
     let i = 0;
     let textNode;
-    while (textNode=textNodes.snapshotItem(i++))
+    while (textNode=textNodes.snapshotItem(i++) !== null)
     {
         //if (DEBUG)
         //{
