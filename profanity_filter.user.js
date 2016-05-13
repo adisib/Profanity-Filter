@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
-// @version       2016.05.12
+// @version       2016.05.13
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -38,11 +38,7 @@
 
 
 
-    // -- Begin filtering --
 
-
-
-    // Grab nodes with Xpath (it should perform better because implemented natively)
     let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code or self::textarea)]//text()[string-length(normalize-space(.)) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
 
@@ -73,6 +69,9 @@
         if (wordsFilter.test(textNode.data))
         {
             textNode.data = textNode.data.replace(wordsFilter, replaceString);
+
+            // replace is supposed to set lastIndex to 0, but some browsers might not do this
+            // This will remain as long as all supported browsers have not agreed on what to do here
             wordsFilter.lastIndex = 0;
         }
     }
