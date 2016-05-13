@@ -3,9 +3,11 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description	  Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
+// @version       2016.05.12
 // @include       http://*
 // @include       https://*
 // @noframes
+// @grant         none
 // ==/UserScript==
 
 // -- NOTICE --
