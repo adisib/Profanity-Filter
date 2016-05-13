@@ -12,6 +12,8 @@
 
 
 (function() {
+    
+    "use strict";
 
     // Display performance and debugging information to the console.
     const DEBUG = false;
