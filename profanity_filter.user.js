@@ -50,9 +50,10 @@
 
     // Xpath will not grab the title so replace that too
     // Do it first because it is always visible
-    if (document.title.search(wordsFilter) !== -1)
+    if (wordsFilter.test(document.title))
     {
       document.title = document.title.replace(wordsFilter, replaceString);
+      wordsFilter.lastIndex = 0;
     }
 
 
