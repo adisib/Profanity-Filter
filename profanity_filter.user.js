@@ -59,7 +59,7 @@
 
     let i = 0;
     let textNode;
-    while (textNode=textNodes.snapshotItem(i++) !== null)
+    while (textNode=textNodes.snapshotItem(i++))
     {
         //if (DEBUG)
         //{
