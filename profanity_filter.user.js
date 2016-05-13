@@ -70,9 +70,10 @@
         //}
 
         // This optimizes for the case of the words NOT being on the page (which is most likely).
-        if (textNode.data.search(wordsFilter) !== -1)
+        if (wordsFilter.test(textNode.data))
         {
             textNode.data = textNode.data.replace(wordsFilter, replaceString);
+            wordsFilter.lastIndex = 0;
         }
     }
 
