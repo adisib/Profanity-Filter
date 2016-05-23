@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
-// @version       2016.05.13
+// @version       2016.05.23
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -38,6 +38,21 @@
 
 
 
+    // Optimize for the case that no matches are found on the page.
+    // This will somewhat reduce performance when matches exist, but have major performance gains when there are no matches.
+    if(!wordsFilter.test(document.documentElement.textContent))
+    {
+        if (DEBUG)
+        {
+            console.log("PF | No matches found");
+
+            var endTime = performance.now();
+            console.log("PF | Run-Time (ms): " + (endTime - startTime).toString());
+        }
+
+        return;
+    }
+    wordsFilter.lastIndex = 0;
 
     let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code or self::textarea)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
@@ -66,7 +81,7 @@
         //  console.log("PF | " + textNode.parentNode.tagName + " , '" + textNode.data + "'");
         //}
 
-        // This optimizes for the case of the words NOT being on the page (which is most likely).
+        // This optimizes for the case of few words being on the page
         if (wordsFilter.test(textNode.data))
         {
             textNode.data = textNode.data.replace(wordsFilter, replaceString);
