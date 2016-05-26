@@ -30,11 +30,11 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
-    const words = ['fuck','shit','ass','damn','asshole','bullshit','shitty','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigger','nigga','motherfuck','mothafuckaz','mothafucka','mothafuck','fuk','fuckme','fcuk','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','buttfuck','asswipe','asskisser'];
+    const words = ['fuck','shit','ass','damn','asshole','bullshit','shitty','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigger','nigga','motherfuck','mothafucka','mothafuck','fuk','fuckme','fcuk','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','buttfuck','asswipe','asskisser'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")(?:in(?:g)?|ed|er)??(?:es|s)??\\b", "gi");
+    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")(?:in(?:g)?|ed|er)??(?:s|es|z)??\\b", "gi");
 
 
 
@@ -93,6 +93,7 @@
     
         textNode = textNodes.snapshotItem(++i);
     }
+
 
 
     if (DEBUG)
