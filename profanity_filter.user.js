@@ -40,7 +40,7 @@
 
     // Optimize for the case that no matches are found on the page.
     // This will somewhat reduce performance when matches exist, but have major performance gains when there are no matches.
-    if(!wordsFilter.test(document.documentElement.textContent))
+    if(!wordsFilter.test(document.body.textContent))
     {
         if (DEBUG)
         {
