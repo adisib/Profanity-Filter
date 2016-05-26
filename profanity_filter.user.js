@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
-// @version       2016.05.23
+// @version       2016.05.26
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -73,8 +73,8 @@
 
 
     let i = 0;
-    let textNode;
-    while (textNode=textNodes.snapshotItem(i++))
+    let textNode = textNodes.snapshotItem(0);
+    while (textNode !== null)
     {
         //if (DEBUG)
         //{
@@ -90,8 +90,9 @@
             // This will remain as long as all supported browsers have not agreed on what to do here
             wordsFilter.lastIndex = 0;
         }
+    
+        textNode = textNodes.snapshotItem(++i);
     }
-
 
 
     if (DEBUG)
