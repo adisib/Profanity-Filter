@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
-// @version       2016.05.26
+// @version       2016.05.29
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -11,9 +11,11 @@
 // ==/UserScript==
 
 
+
 (function() {
-    
+
     "use strict";
+
 
     // Display performance and debugging information to the console.
     const DEBUG = false;
@@ -30,11 +32,11 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
-    const words = ['fuck','shit','ass','damn','asshole','bullshit','shitty','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigger','nigga','motherfuck','mothafucka','mothafuck','fuk','fuckme','fcuk','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','buttfuck','asswipe','asskisser'];
+    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigg','nigga','motherfuck','mothafucka','mothafuck','fuk','fuckme','fcuk','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','buttfuck','asswipe','asskisser'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")(?:in(?:g)?|ed|er)??(?:s|es|z)??\\b", "gi");
+    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")(?:in(?:g)?|ed|er)??(?:s|es|y|z)??\\b", "gi");
 
 
 
@@ -54,13 +56,15 @@
     }
     wordsFilter.lastIndex = 0;
 
-    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code or self::textarea)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
+
+    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code or self::textarea)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
     if (DEBUG)
     {
         console.log("PF | Snapshots: " + textNodes.snapshotLength.toString());
     }
+
 
 
     // Xpath will not grab the title so replace that too
@@ -90,7 +94,7 @@
             // This will remain as long as all supported browsers have not agreed on what to do here
             wordsFilter.lastIndex = 0;
         }
-    
+
         textNode = textNodes.snapshotItem(++i);
     }
 
