@@ -2,7 +2,7 @@
 // @name          Profanity Filter
 // @author        adisib
 // @namespace     namespace_adisib
-// @description	  Basic filtering for profanity from website text. Designed to have minimal performance impact.
+// @description	  Basic filtering for words (profanity by default) from website text. Designed to have minimal performance impact.
 // @version       2016.05.29
 // @include       http://*
 // @include       https://*
