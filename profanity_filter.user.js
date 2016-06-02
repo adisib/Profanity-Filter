@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2016.05.29
+// @version       2016.06.02
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -32,29 +32,11 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
-    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigg','nigga','motherfuck','mothafucka','mothafuck','fuk','fuckme','fcuk','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','buttfuck','asswipe','asskisser'];
+    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitt','shitfull','shiz','pissoff','nigg','nigga','motherfuck','mothafucka','mothafuck','fuk','fukk','fuckme','fcuk','b!tch','phuq','phukk','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagg','fagget','dipshit','assfuck','buttfuck','asswipe','asskiss','assclown'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
     const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")(?:in(?:g)?|ed|er)??(?:s|es|y|z)??\\b", "gi");
-
-
-
-    // Optimize for the case that no matches are found on the page.
-    // This will somewhat reduce performance when matches exist, but have major performance gains when there are no matches.
-    if (!wordsFilter.test(document.body.textContent))
-    {
-        if (DEBUG)
-        {
-            console.log("PF | No matches found");
-
-            var endTime = performance.now();
-            console.log("PF | Run-Time (ms): " + (endTime - startTime).toString());
-        }
-
-        return;
-    }
-    wordsFilter.lastIndex = 0;
 
 
 
