@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2016.06.13
+// @version       2016.06.21
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -54,7 +54,6 @@
     if (wordsFilter.test(document.title))
     {
       document.title = document.title.replace(wordsFilter, replaceString);
-      wordsFilter.lastIndex = 0;
     }
 
 
@@ -71,10 +70,6 @@
         if (wordsFilter.test(textNode.data))
         {
             textNode.data = textNode.data.replace(wordsFilter, replaceString);
-
-            // replace is supposed to set lastIndex to 0, but some browsers might not do this
-            // This will remain as long as all supported browsers have not agreed on what to do here
-            wordsFilter.lastIndex = 0;
         }
 
         textNode = textNodes.snapshotItem(++i);
