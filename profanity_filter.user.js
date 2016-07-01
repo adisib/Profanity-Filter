@@ -36,7 +36,7 @@
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?:in(?:g)?|ed|(?:i)??er)??(?:s|es|y|z)??\\b", "gi");
+    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?:ing?|ed|i??er)??(?:s|es|y|z)??\\b", "gi");
 
 
 
