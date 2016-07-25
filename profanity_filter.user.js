@@ -20,9 +20,10 @@
     // Display performance and debugging information to the console.
     const DEBUG = false;
 
+    let startTime, endTime;
     if (DEBUG)
     {
-      var startTime = performance.now();
+      startTime = performance.now();
     }
 
 
@@ -40,7 +41,7 @@
 
 
 
-    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code or self::textarea)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
     if (DEBUG)
     {
@@ -61,7 +62,7 @@
     for (let i=0; i < l; ++i)
     {
         let textNode = textNodes.snapshotItem(i);
-        
+
         //if (DEBUG)
         //{
         //  console.log("PF | " + textNode.parentNode.tagName + " , '" + textNode.data + "'");
@@ -78,7 +79,7 @@
 
     if (DEBUG)
     {
-        var endTime = performance.now();
+        endTime = performance.now();
         console.log("PF | Run-Time (ms): " + (endTime - startTime).toString());
     }
 
