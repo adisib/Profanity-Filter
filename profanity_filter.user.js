@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2016.07.01
+// @version       2016.07.25
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -11,11 +11,9 @@
 // ==/UserScript==
 
 
-
 (function() {
 
     "use strict";
-
 
     // Display performance and debugging information to the console.
     const DEBUG = false;
@@ -23,7 +21,7 @@
     let startTime, endTime;
     if (DEBUG)
     {
-      startTime = performance.now();
+        startTime = performance.now();
     }
 
 
@@ -33,11 +31,11 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
-    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shitfull','shiz','pissoff','nig','nigga','motherfuck','mothafucka','mothafuck','fuk','fuckme','fcuk','b!tch','phuq','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagget','dipshit','assfuck','buttfuck','asswipe','asskiss','assclown'];
+    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shiz','pissoff','nig','nigga','shitfull','motherfuck','mothafucka','mothafuck','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagget','dipshit','assfuck','buttfuck','asswipe','asskiss','assclown'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?:ing?|ed|i??er)??(?:s|es|y|z|ess)??\\b", "gi");
+    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?:ing?|ed|i??er)??(?:[syz]|ess??)??\\b", "gi");
 
 
 
@@ -54,7 +52,7 @@
     // Do it first because it is always visible
     if (wordsFilter.test(document.title))
     {
-      document.title = document.title.replace(wordsFilter, replaceString);
+        document.title = document.title.replace(wordsFilter, replaceString);
     }
 
 
@@ -68,7 +66,6 @@
         //  console.log("PF | " + textNode.parentNode.tagName + " , '" + textNode.data + "'");
         //}
 
-        // This optimizes for the case of few words being on the page
         if (wordsFilter.test(textNode.data))
         {
             textNode.data = textNode.data.replace(wordsFilter, replaceString);
