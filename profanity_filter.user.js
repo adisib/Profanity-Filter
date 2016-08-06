@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2016.07.25
+// @version       2016.08.06
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -31,11 +31,12 @@
 
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
+    // (also should probably be sanitized before dropping into regex)
     const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','sh!t','jackass','goddamn','crap','bastard','cunt','dumbass','fag','douche','shiz','pissoff','nig','nigga','shitfull','motherfuck','mothafucka','mothafuck','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','feg','fatass','faggot','fagot','faggit','fagget','dipshit','assfuck','buttfuck','asswipe','asskiss','assclown'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?:ing?|ed|i??er)??(?:[syz]|ess??)??\\b", "gi");
+    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgk]??(?=(?:ing?|ed|i??er)??(?:[syz]|ess??)??\\b)", "gi");
 
 
 
