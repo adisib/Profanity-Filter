@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2016.08.06
+// @version       2016.09.16
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -40,7 +40,7 @@
 
 
 
-    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code)]//text()[string-length(normalize-space()) > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+    let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code)]//text()[string-length() > 2]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
     if (DEBUG)
     {
@@ -61,11 +61,6 @@
     for (let i=0; i < l; ++i)
     {
         let textNode = textNodes.snapshotItem(i);
-
-        //if (DEBUG)
-        //{
-        //  console.log("PF | " + textNode.parentNode.tagName + " , '" + textNode.data + "'");
-        //}
 
         if (wordsFilter.test(textNode.data))
         {
