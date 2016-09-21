@@ -2,7 +2,7 @@
 // @name          Profanity Filter Ajax
 // @author        adisib
 // @namespace     namespace_adisib
-// @description   Filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
+// @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
 // @version       2016.09.20
 // @include       http://*
 // @include       https://*
@@ -83,31 +83,33 @@
     // Handler for mutation observer from filterDynamicText()
     function filterMutations(mutations)
     {
-        for (let j=0; j < mutations.length; ++j)
+        for (let i=0; i < mutations.length; ++i)
         {
             let startTime, endTime;
             if (DEBUG)
             {
                 startTime = performance.now();
             }
+            
+            let mutation = mutations[i];
 
-            if (mutations[j].type === "childList")
+            if (mutation.type === "childList")
             {
-                let nodes = mutations[j].addedNodes;
+                let nodes = mutation.addedNodes;
                 for (let i=0; i < nodes.length; ++i)
                 {
                     filterNodeTree(nodes[i]);
                 }
             }
-            else if (mutations[j].type === "characterData")
+            else if (mutation.type === "characterData")
             {
-                filterNodeTree(mutations[j].target);
+                filterNodeTree(mutation.target);
             }
 
             if (DEBUG)
             {
                 endTime = performance.now();
-                console.log("PF | Static Text Run-Time (ms): " + (endTime - startTime).toString());
+                console.log("PF | Dynamic Text Run-Time (ms): " + (endTime - startTime).toString());
             }
         }
     }
