@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2016.09.20
+// @version       2016.09.28
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -83,14 +83,14 @@
     // Handler for mutation observer from filterDynamicText()
     function filterMutations(mutations)
     {
-        for (let i=0; i < mutations.length; ++i)
+        let startTime, endTime;
+        if (DEBUG)
         {
-            let startTime, endTime;
-            if (DEBUG)
-            {
-                startTime = performance.now();
-            }
-            
+            startTime = performance.now();
+        }
+
+        for (let i=0; i < mutations.length; ++i)
+        {   
             let mutation = mutations[i];
 
             if (mutation.type === "childList")
@@ -103,14 +103,27 @@
             }
             else if (mutation.type === "characterData")
             {
-                filterNodeTree(mutation.target);
+                filterNode(mutation.target);
             }
+        }
+        
+        if (DEBUG)
+        {
+            endTime = performance.now();
+            console.log("PF | Dynamic Text Run-Time (ms): " + (endTime - startTime).toString());
+        }
+    }
 
-            if (DEBUG)
-            {
-                endTime = performance.now();
-                console.log("PF | Dynamic Text Run-Time (ms): " + (endTime - startTime).toString());
-            }
+
+    // --------------------
+
+
+    // Filters a textNode
+    function filterNode(node)
+    {
+        if (wordsFilter.test(node.data))
+        {
+            node.data = node.data.replace(wordsFilter, replaceString);
         }
     }
 
@@ -121,17 +134,17 @@
     // Filters all of the text from a node and its decendants
     function filterNodeTree(node)
     {
-        let textNodes = document.evaluate("./*[not(self::script or self::noscript or self::code)]//text()[string-length() > 2]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+        if (node.data)
+        {
+            filterNode(node);
+        }
+
+        let textNodes = document.evaluate("./text()[string-length() > 2]|./*[not(self::script or self::noscript or self::code)]//text()[string-length() > 2]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
         const l = textNodes.snapshotLength;
         for (let i=0; i < l; ++i)
         {
-            let textNode = textNodes.snapshotItem(i);
-
-            if (wordsFilter.test(textNode.data))
-            {
-                textNode.data = textNode.data.replace(wordsFilter, replaceString);
-            }
+            filterNode(textNodes.snapshotItem(i));
         }
     }
 
