@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2016.09.28
+// @version       2016.09.30
 // @include       http://*
 // @include       https://*
 // @noframes
@@ -71,9 +71,13 @@
     function filterDynamicText()
     {
         let textMutationObserver = new MutationObserver( function(mutations) { filterMutations(mutations); } );
-        let TMOInitOps = { characterData: true, childList: true, subtree: true };
+        let TxMOInitOps = { characterData: true, childList: true, subtree: true };
+        textMutationObserver.observe(document.body, TxMOInitOps);
 
-        textMutationObserver.observe(document.body, TMOInitOps);
+        let title = document.getElementsByTagName("title")[0];
+        let titleMutationObserver = new MutationObserver( function(mutations) { filterNode(title); } );
+        let TiMOInitOps = { characterData: true, subtree: true };
+        titleMutationObserver.observe(title, TiMOInitOps);
     }
 
 
@@ -139,7 +143,7 @@
             filterNode(node);
         }
 
-        let textNodes = document.evaluate("./text()[string-length() > 2]|./*[not(self::script or self::noscript or self::code)]//text()[string-length() > 2]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+        let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
         const l = textNodes.snapshotLength;
         for (let i=0; i < l; ++i)
