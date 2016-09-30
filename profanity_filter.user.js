@@ -2,7 +2,7 @@
 // @name          Profanity Filter
 // @author        adisib
 // @namespace     namespace_adisib
-// @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
+// @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
 // @version       2016.09.30
 // @include       http://*
 // @include       https://*
@@ -15,15 +15,12 @@
 
     "use strict";
 
+
+    // --- GLOBALS --------
+
+
     // Display performance and debugging information to the console.
     const DEBUG = false;
-
-    let startTime, endTime;
-    if (DEBUG)
-    {
-        startTime = performance.now();
-    }
-
 
 
     // set replacement string
@@ -39,41 +36,136 @@
     const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgkp]??(?=(?:ing?(:?ess)??|ed|i??er|a)??(?:e??[syz])??\\b)", "gi");
 
 
+    // --------------------
 
-    let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
-    if (DEBUG)
+    // Initial slow filter pass that handles static text
+    function FilterStaticText()
     {
-        console.log("PF | Snapshots: " + textNodes.snapshotLength.toString());
-    }
-
-
-
-    // Xpath will not grab the title so replace that too
-    // Do it first because it is always visible
-    if (wordsFilter.test(document.title))
-    {
-        document.title = document.title.replace(wordsFilter, replaceString);
-    }
-
-
-    const l = textNodes.snapshotLength;
-    for (let i=0; i < l; ++i)
-    {
-        let textNode = textNodes.snapshotItem(i);
-
-        if (wordsFilter.test(textNode.data))
+        let startTime, endTime;
+        if (DEBUG)
         {
-            textNode.data = textNode.data.replace(wordsFilter, replaceString);
+            startTime = performance.now();
+        }
+
+        // Do title first because it is always visible
+        if (wordsFilter.test(document.title))
+        {
+            document.title = document.title.replace(wordsFilter, replaceString);
+        }
+
+        filterNodeTree(document.body);
+
+        if (DEBUG)
+        {
+            endTime = performance.now();
+            console.log("PF | Static Text Run-Time (ms): " + (endTime - startTime).toString());
         }
     }
 
 
+    // --------------------
 
-    if (DEBUG)
+
+    // filters dynamic text, and handles things like AJAX Youtube comments
+    function filterDynamicText()
     {
-        endTime = performance.now();
-        console.log("PF | Run-Time (ms): " + (endTime - startTime).toString());
+        let textMutationObserver = new MutationObserver( function(mutations) { filterMutations(mutations); } );
+        let TxMOInitOps = { characterData: true, childList: true, subtree: true };
+        textMutationObserver.observe(document.body, TxMOInitOps);
+
+        let title = document.getElementsByTagName("title")[0];
+        let titleMutationObserver = new MutationObserver( function(mutations) { filterNode(title); } );
+        let TiMOInitOps = { characterData: true, subtree: true };
+        titleMutationObserver.observe(title, TiMOInitOps);
     }
+
+
+    // --------------------
+
+
+    // Handler for mutation observer from filterDynamicText()
+    function filterMutations(mutations)
+    {
+        let startTime, endTime;
+        if (DEBUG)
+        {
+            startTime = performance.now();
+        }
+
+        for (let i=0; i < mutations.length; ++i)
+        {   
+            let mutation = mutations[i];
+
+            if (mutation.type === "childList")
+            {
+                let nodes = mutation.addedNodes;
+                for (let i=0; i < nodes.length; ++i)
+                {
+                    filterNodeTree(nodes[i]);
+                }
+            }
+            else if (mutation.type === "characterData")
+            {
+                filterNode(mutation.target);
+            }
+        }
+        
+        if (DEBUG)
+        {
+            endTime = performance.now();
+            console.log("PF | Dynamic Text Run-Time (ms): " + (endTime - startTime).toString());
+        }
+    }
+
+
+    // --------------------
+
+
+    // Filters a textNode
+    function filterNode(node)
+    {
+        if (wordsFilter.test(node.data))
+        {
+            node.data = node.data.replace(wordsFilter, replaceString);
+        }
+    }
+
+
+    // --------------------
+
+
+    // Filters all of the text from a node and its decendants
+    function filterNodeTree(node)
+    {
+        if (node.data)
+        {
+            filterNode(node);
+        }
+
+        let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+
+        const l = textNodes.snapshotLength;
+        for (let i=0; i < l; ++i)
+        {
+            filterNode(textNodes.snapshotItem(i));
+        }
+    }
+
+
+    // --------------------
+
+
+    // Runs the different filter types
+    function filterPage()
+    {
+        filterDynamicText();
+        FilterStaticText();
+    }
+
+
+    // --- MAIN -----------
+
+    filterPage();
 
 })();
