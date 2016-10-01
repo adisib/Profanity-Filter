@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          Profanity Filter Ajax
+// @name          Profanity Filter
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
@@ -66,7 +66,7 @@
     // --------------------
 
 
-    // filters dynamic text, and handles things like AJAX Youtube comments
+    // filters dynamic text, and handles things such as AJAX Youtube comments
     function filterDynamicText()
     {
         let textMutationObserver = new MutationObserver( function(mutations) { filterMutations(mutations); } );
@@ -93,7 +93,7 @@
         }
 
         for (let i=0; i < mutations.length; ++i)
-        {   
+        {
             let mutation = mutations[i];
 
             if (mutation.type === "childList")
@@ -109,7 +109,7 @@
                 filterNode(mutation.target);
             }
         }
-        
+
         if (DEBUG)
         {
             endTime = performance.now();
