@@ -1,12 +1,11 @@
 // ==UserScript==
-// @name          Profanity Filter
+// @name          Profanity Filter Ajax
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2016.09.30
+// @version       2016.10.01
 // @include       http://*
 // @include       https://*
-// @noframes
 // @grant         none
 // ==/UserScript==
 
@@ -40,7 +39,7 @@
 
 
     // Initial slow filter pass that handles static text
-    function FilterStaticText()
+    function filterStaticText()
     {
         let startTime, endTime;
         if (DEBUG)
@@ -160,7 +159,7 @@
     function filterPage()
     {
         filterDynamicText();
-        FilterStaticText();
+        filterStaticText();
     }
 
 
