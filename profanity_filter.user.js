@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2016.10.01
+// @version       2017.03.22
 // @include       http://*
 // @include       https://*
 // @grant         none
@@ -137,6 +137,11 @@
     // Filters all of the text from a node and its decendants
     function filterNodeTree(node)
     {
+        if (!node || !(node.tagName))
+        {
+            return;
+        }
+
         if (node.data)
         {
             filterNode(node);
