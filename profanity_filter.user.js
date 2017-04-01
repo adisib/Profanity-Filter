@@ -137,14 +137,15 @@
     // Filters all of the text from a node and its decendants
     function filterNodeTree(node)
     {
-        if (!node || !(node.tagName))
+        if (!node || (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.TEXT_NODE))
         {
             return;
         }
 
-        if (node.data)
+        if (node.nodeType === Node.TEXT_NODE)
         {
             filterNode(node);
+            return; // text nodes don't have children
         }
 
         let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
