@@ -164,8 +164,8 @@
     // Runs the different filter types
     function filterPage()
     {
-        filterDynamicText();
         filterStaticText();
+        filterDynamicText();
     }
 
 
