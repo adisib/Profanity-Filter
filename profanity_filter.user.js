@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2017.04.02
+// @version       2017.04.14
 // @include       http://*
 // @include       https://*
 // @grant         none
@@ -99,9 +99,9 @@
             if (mutation.type === "childList")
             {
                 let nodes = mutation.addedNodes;
-                for (let i=0; i < nodes.length; ++i)
+                for (let j=0; j < nodes.length; ++j)
                 {
-                    filterNodeTree(nodes[i]);
+                    filterNodeTree(nodes[j]);
                 }
             }
             else if (mutation.type === "characterData")
