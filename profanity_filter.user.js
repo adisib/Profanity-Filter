@@ -69,7 +69,7 @@
     // filters dynamic text, and handles things such as AJAX Youtube comments
     function filterDynamicText()
     {
-        let textMutationObserver = new MutationObserver( function(mutations) { filterMutations(mutations); } );
+        let textMutationObserver = new MutationObserver(filterMutations);
         let TxMOInitOps = { characterData: true, childList: true, subtree: true };
         textMutationObserver.observe(document.body, TxMOInitOps);
 
