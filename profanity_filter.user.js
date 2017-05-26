@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2017.04.14
+// @version       2017.05.26
 // @include       http://*
 // @include       https://*
 // @grant         none
@@ -74,9 +74,12 @@
         textMutationObserver.observe(document.body, TxMOInitOps);
 
         let title = document.getElementsByTagName("title")[0];
-        let titleMutationObserver = new MutationObserver( function(mutations) { filterNode(title); } );
-        let TiMOInitOps = { characterData: true, subtree: true };
-        titleMutationObserver.observe(title, TiMOInitOps);
+        if (title)
+        {
+            let titleMutationObserver = new MutationObserver( function(mutations) { filterNode(title); } );
+            let TiMOInitOps = { characterData: true, subtree: true };
+            titleMutationObserver.observe(title, TiMOInitOps);
+        }
     }
 
 
@@ -92,14 +95,14 @@
             startTime = performance.now();
         }
 
-        for (let i=0; i < mutations.length; ++i)
+        for (let i = 0; i < mutations.length; ++i)
         {
             let mutation = mutations[i];
 
             if (mutation.type === "childList")
             {
                 let nodes = mutation.addedNodes;
-                for (let j=0; j < nodes.length; ++j)
+                for (let j = 0; j < nodes.length; ++j)
                 {
                     filterNodeTree(nodes[j]);
                 }
@@ -151,7 +154,7 @@
         let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
         const l = textNodes.snapshotLength;
-        for (let i=0; i < l; ++i)
+        for (let i = 0; i < l; ++i)
         {
             filterNode(textNodes.snapshotItem(i));
         }
