@@ -169,6 +169,7 @@
     {
         filterStaticText();
         filterDynamicText();
+        words = [];
     }
 
 
