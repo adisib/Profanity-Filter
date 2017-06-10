@@ -127,7 +127,7 @@
     // Filters a textNode
     function filterNode(node)
     {
-        if (wordsFilter.test(node.data))
+        if (wordsFilter.test(node.data) && !node.parentNode.isContentEditable)
         {
             node.data = node.data.replace(wordsFilter, replaceString);
         }
