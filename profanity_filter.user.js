@@ -28,7 +28,7 @@
     // words to be filtered list
     // This should be ordered by most common first for performance (still TODO, but not important)
     // (also should probably be sanitized before dropping into regex)
-    const words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','goddamn','crap','sh!t','bastard','dumbass','fag','motherfuck','nig','cunt','douche','douchebag','jackass','mothafuck','pissoff','shitfull','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','fatass','faggot','dipshit','fagot','faggit','fagget','assfuck','buttfuck','asswipe','asskiss','assclown'];
+    let words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','goddamn','crap','sh!t','bastard','dumbass','fag','motherfuck','nig','cunt','douche','douchebag','jackass','mothafuck','pissoff','shitfull','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','fatass','faggot','dipshit','fagot','faggit','fagget','assfuck','buttfuck','asswipe','asskiss','assclown'];
 
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
@@ -169,7 +169,7 @@
     {
         filterStaticText();
         filterDynamicText();
-        words = [];
+        words = null;
     }
 
 
