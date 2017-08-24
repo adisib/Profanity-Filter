@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Simple filtering for profanity from website text. Not limited to static text, while avoiding performance impact.
-// @version       2017.06.11
+// @version       2017.08.24
 // @include       http://*
 // @include       https://*
 // @grant         none
@@ -33,6 +33,9 @@
     // filters the words and any versions with optional endings
     // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
     const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgkp]??(?=(?:ing?(?:ess)??|ed|i??er|a)??(?:e??[syz])??\\b)", "gi");
+
+    // Creates an xpath expression used to find text nodes to filter. We only have to parse the expression once this way which is faster for dynamic filtering.
+    const findText = document.createExpression(".//text()[string-length() > 2 and not(parent::script or parent::code)]", null);
 
 
     // --------------------
@@ -151,7 +154,7 @@
             return; // text nodes don't have children
         }
 
-        let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+        let textNodes = findText.evaluate(node, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
         const l = textNodes.snapshotLength;
         for (let i = 0; i < l; ++i)

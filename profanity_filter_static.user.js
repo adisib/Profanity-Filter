@@ -47,7 +47,7 @@
 
 
 
-    let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::noscript or parent::code)]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+    let textNodes = document.evaluate(".//text()[string-length() > 2 and not(parent::script or parent::code)]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
     if (DEBUG)
     {
@@ -65,7 +65,7 @@
 
 
     const l = textNodes.snapshotLength;
-    for (let i=0; i < l; ++i)
+    for (let i = 0; i < l; ++i)
     {
         let textNode = textNodes.snapshotItem(i);
 
