@@ -15,30 +15,30 @@
     "use strict";
 
 
-    // --- GLOBALS --------
+    // --- SETTINGS --------
 
+
+    // The string that replaces offending words.
+    const replaceString = "*bleep*";
+
+    // List of words that should be filtered which completely replaces the default list. You don't have to include endings like plurals or "ing", as they will always be handled.
+    // If null, then uses a precompiled version of default list for extra performance. If you set a word list, you may lose performance from it not being precompiled.
+    // The default list is: ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','goddamn','crap','sh!t','bastard','dumbass','fag','motherfuck','nigger','cunt','douche','douchebag','jackass','mothafuck','pissoff','shitfull','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','fatass','faggot','dipshit','fagot','faggit','fagget','assfuck','buttfuck','asswipe','asskiss','assclown']
+    // This should be ordered by most common first for performance, and must only contain alpha-numeric (unless you sanitize for regex)
+    const words = null;
 
     // Display performance and debugging information to the console.
     const DEBUG = false;
 
 
-    // set replacement string
-    const replaceString = "*bleep*";
-
-    // words to be filtered list
-    // This should be ordered by most common first for performance (still TODO, but not important)
-    // (also should probably be sanitized before dropping into regex)
-    let words = ['fuck','shit','ass','damn','asshole','bullshit','bitch','piss','goddamn','crap','sh!t','bastard','dumbass','fag','motherfuck','nig','cunt','douche','douchebag','jackass','mothafuck','pissoff','shitfull','fuk','fuckme','fvck','fcuk','b!tch','phuq','phuk','phuck','fatass','faggot','dipshit','fagot','faggit','fagget','assfuck','buttfuck','asswipe','asskiss','assclown'];
-
-    // filters the words and any versions with optional endings
-    // shouldn't run into issues with optional endings; a whitelist would be trivial to implement should it be required
-    const wordsFilter = new RegExp("\\b(?:" + words.join("|") + ")[tgkp]??(?=(?:ing?(?:ess)??|ed|i??er|a)??(?:e??[syz])??\\b)", "gi");
-
-    // Creates an xpath expression used to find text nodes to filter. We only have to parse the expression once this way which is faster for dynamic filtering.
-    const findText = document.createExpression(".//text()[string-length() > 2 and not(parent::script or parent::code)]", null);
-
-
     // --------------------
+
+
+    let wordString = words ? "\\b(?:" + words.join("|") + ")[tgkp]??(?=(?:ing?(?:ess)??|ed|i??er|a)??(?:e??[syz])??\\b)" : "\\b(?:(?:f(?:u(?:ck(?:me)??|k)|a(?:g(?:(?:g[eio]|o)t)??|tass)|(?:cu|vc)k)|b(?:u(?:llshit|ttfuck)|[!i]tch|astard)|ass(?:(?:hol|wip)e|clown|fuck|kiss)??|d(?:amn|umbass|ouche(?:bag)??|ipshit)|p(?:hu(?:c?k|q)|iss(?:off)??)|sh(?:it(?:full)??|!t)|moth(?:er|a)fuck|c(?:rap|unt)|goddamn|jackass|nig))[tgkp]??(?=(?:ing?(?:ess)??|ed|i??er|a)??(?:e??[syz])??\\b)";
+    const wordsFilter = new RegExp(wordString, "gi");
+    wordString = null;
+
+    const findText = document.createExpression(".//text()[string-length() > 2 and not(parent::script or parent::code)]", null);
 
 
     // Initial slow filter pass that handles static text
@@ -172,7 +172,6 @@
     {
         filterStaticText();
         filterDynamicText();
-        words = null;
     }
 
 
