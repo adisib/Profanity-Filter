@@ -2,8 +2,8 @@
 // @name          Profanity Filter (Static)
 // @author        adisib
 // @namespace     namespace_adisib
-// @description	  Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2017.09.19
+// @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
+// @version       2017.11.22
 // @include       http://*
 // @include       https://*
 // @noframes
