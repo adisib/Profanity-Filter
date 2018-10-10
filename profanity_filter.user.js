@@ -111,7 +111,7 @@
                     filterNodeTree(nodes[j]);
                 }
             }
-            else if (mutation.type === "characterData")
+            else if (mutation.type === "characterData" && !mutation.target.parentNode.isContentEditable)
             {
                 filterNode(mutation.target);
             }
@@ -131,7 +131,7 @@
     // Filters a textNode
     function filterNode(node)
     {
-        if (wordsFilter.test(node.data) && !node.parentNode.isContentEditable)
+        if (wordsFilter.test(node.data))
         {
             node.data = node.data.replace(wordsFilter, replaceString);
         }
