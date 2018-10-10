@@ -3,7 +3,7 @@
 // @author        adisib
 // @namespace     namespace_adisib
 // @description   Basic filtering for profanity from website text. Designed to have minimal performance impact.
-// @version       2017.11.22
+// @version       2018.10.10
 // @include       http://*
 // @include       https://*
 // @noframes
